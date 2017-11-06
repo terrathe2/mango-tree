@@ -8,25 +8,22 @@
       Tinggi Bertambah {{ pertambahaanTinggi }} centimeter, saat ini pohon memiliki tinggi {{ data.tinggi }} centimeter<br>
       Status: {{ data.status }}
     </h5>
-    <button type="button" name="button" @click="startCron">Start Grow</button> <button type="button" name="button" @click="reset">Reset</button>
+    <button type="button" name="button" @click="startCron" v-if="!isPlay">Start Grow</button>
+    <button type="button" name="button" @click="reset">Reset</button>
   </div>
 </template>
 
 <script>
-const CronJob = require('cron').CronJob
+import cron from 'cron'
 
 export default {
   name: 'HelloWorld',
   data () {
     return {
       data: '',
-      // message: '',
-      // tinggi: 0,
+      isPlay: false,
       pertambahaanTinggi: 0,
-      // umur: 0,
       sehat: true
-      // status: '',
-      // imgUrl: ''
     }
   },
   methods: {
@@ -39,8 +36,12 @@ export default {
         imgUrl: ''
       })
     },
+
     startCron () {
-      let Cron = new CronJob('*/5 * * * * *', () => {
+      this.isPlay = true
+      // const CronJob = cron.CronJob
+
+      let Cron = new cron.CronJob('*/5 * * * * *', () => {
         this.grow()
 
         if (this.sehat === true) {
