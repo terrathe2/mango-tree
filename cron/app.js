@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config)
 var db = firebase.database()
 
-let Cron = new CronJob('*/1 * * * * *', () => {
+let Cron = new CronJob('*/5 * * * * *', () => {
 
   db.ref('mangotree/status').once('value', function(snapshot){
     if (snapshot.val() !== 'dead') {
